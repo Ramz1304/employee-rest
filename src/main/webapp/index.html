@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+
+
+  <head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+<div class="container">
+<div class="row">
+<h1> employee application </h1>
+<div class="col">
+</div><!-- col end-->
+</div><!-- row end-->
+<div class="row">
+<div class="col">
+
+<h2> Add Employee </h2>
+
+
+<form method="POST" action ="./api">
+
+ID <input name="id"/> </br>
+NAME <input name="name"/> </br>
+AGE <input name="age"/> </br>
+
+<button type = "submit">Submit</button>
+
+</form>
+</div><!-- col end-->
+</div><!-- row end-->
+
+<div class="row">
+<div class="col">
+
+<h2> View Employee </h2>
+
+<form method="GET" action ="./api">
+
+ID <input name="id"/> </br>
+
+
+<button type = "submit">Submit</button>
+
+</form>
+</div><!-- col end-->
+</div><!-- row end-->
+
+<div class="row">
+<div class="col">
+<h2>View All Employee </h2>
+<a href="./api">View all employee</a>
+</div><!-- col end-->
+</div><!-- row end-->
+
+<div class="row">
+<div class="col">
+
+<h2>Delete Employee</h2>
+<form method="GET" action ="./api">
+ID <input name="id"/> </br>
+<input type="hidden" name="action" value="delete">
+<button type = "submit">Submit</button>
+</form>
+</div><!-- col end-->
+</div><!-- row end-->
+</div> <!-- container end -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+
+</body>
+</html>
