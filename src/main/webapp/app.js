@@ -1,31 +1,103 @@
-function sayHello(){
-var name = document.getElementById("name").value;
-alert("hello" + name);
-calculateSalary(printSalary);
+function addEmployee(event){
+	
+	var $form = $("#employee-form");
+	var json = toJson($form);
+	
+	alert("adding-employee");
+	
+	
+	
+	$.ajax({
+		url: './api',
+		type: 'POST',
+		data: json,
+		success: function(response) {
+			console.log("employee created");
+			getEmployeelist();
+		},
+		error: function(){
+			console.log("an error has occured");
+	}
+	});
+	
+	return false;
 }
 
-function calculateSalary(xyzFunction){
-var age = document.getElementById("age").value;
-var salary = 2*age;
-xyzFunction(salary);
+function getEmployeelist(){
+	$.ajax({
+		url: './api',
+		type: 'GET',
+		success: function(data) {
+			console.log("employee data fetched");
+			console.log(data);
+			displayEmployeelist(data);
+		},
+		error: function(){
+			alert("an error has occured");
+	}
+	});
+	
 }
 
-function printSalary(salary){
- console.info(" the salary is " + salary);
- }
- 
- function getEmployee(){
-      var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = processReq;
-	  xhttp.open("GET", "http://localhost:9000/employee/api", true);
-	  xhttp.send();
-	  }
-	  
-	  function processReq(){
-	  if(this.status == 200){
-	  console.log(this.responseText);
-	  }
-	  else{
-	  console.log("a network error has happened");
-	  }
-	  }
+function displayEmployeelist(data){
+	console.log("printing employee data");
+	var $tbody = $('#employee-table').find('tbody');
+	$tbody.empty();
+	for(var i in data){
+		var e = data[i];
+		var buttonhtml = '<button onclick="deleteEmployee(' + e.id + ')">delete</button>'
+		var row = "<tr>"
+		+ "<td>" + e.id + "</td>" 
+		+ "<td>" + e.name + "</td>" 
+		+ "<td>" + e.age + "</td>" 
+		+ "<td>" + buttonhtml + "</td>"
+		+ "</tr>";
+		$tbody.append(row);
+		
+	}
+	
+	
+}
+
+function deleteEmployee(id){
+		$.ajax({
+		url: './api?id='+id,
+		type: 'DELETE',
+		success: function(data) {
+			console.log("employee deleted");
+			getEmployeelist();
+		},
+		error: function(){
+			alert("an error has occured");
+	}
+	});
+	
+	
+}
+	
+
+function toJson($form){
+	var serialized = $form.serializeArray();
+	console.log(serialized);
+	var s = '';
+	var data = {};
+    for(s in serialized){
+           data[serialized[s]['name']] = serialized[s]['value']
+	}
+     var json = JSON.stringify(data);
+     console.log(json);
+     return json;
+	
+
+}
+
+function init(){
+	$('#add-employee').click(addEmployee);
+	$('#refresh-data').click(getEmployeelist);
+}
+
+
+
+
+$(document).ready(init);
+$(document).ready(getEmployeelist);
